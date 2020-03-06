@@ -1,3 +1,4 @@
+import axios from "axios";
 const data = require("./Data");
 
 export default {
@@ -29,11 +30,13 @@ export default {
     let producer = data.producers.find(producer => producerId === producer._id);
     if (!producer) return;
     producer.beats.push(beatData);
+  },
+  getFiles: function() {
+    return axios
+      .get("/api/files")
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
   }
-
-  // getProducers: function(_id) {
-  //   return data.producers[_id];
-  // }
 };
 
 function incrementBeatId(beatData) {
