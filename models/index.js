@@ -1,4 +1,6 @@
 module.exports = {
   Beat: require("./beat"),
-  Producer: require("./producer")
+  License: require("./license"),
+  Producer: require("./producer"),
+  User: require("./user")
 };
