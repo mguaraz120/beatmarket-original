@@ -1,5 +1,6 @@
 // Producer
 // _id: number
+// name: String
 // user: user
 // beats: beat[]
 // licenses: license[]
@@ -7,14 +8,14 @@
 // beat
 // _id: number
 // title: String
-// file: String
-// licenses: license[]
+// filename: String  // "cc48fa3087f9a8278a38dd951b1b7105.mp3")
 
 // license
 // _id: number
 // name: String
 // text: String
 // price: number
+
 const customers = [
   {
     _id: 1,
