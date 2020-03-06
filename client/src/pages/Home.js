@@ -22,7 +22,6 @@ class Home extends Component {
 
   loadBeats = () => {
     const beatsByDifferentProducers = [];
-    API.getFiles();
     API.getProducers().forEach(producer => {
       let myBeats = producer.beats;
       let displayBeat = myBeats[0];

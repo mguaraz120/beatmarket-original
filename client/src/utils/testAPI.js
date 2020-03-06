@@ -32,10 +32,7 @@ export default {
     producer.beats.push(beatData);
   },
   getFiles: function() {
-    return axios
-      .get("/api/files")
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
+    return axios.get("/api/files");
   }
 };
 

@@ -47,13 +47,35 @@ class ProducerAdmin extends Component {
     });
   };
 
+  /* class BeatFile {
+  // _id: Number
+  // length: Number,
+  // chunkSize: Number,
+  // uploadDate: Date,
+  // filename: String,
+  // md5: String,
+  // contentType: String
+} */
+
   handleFormSubmit = event => {
     event.preventDefault();
-    API.saveBeat(this.state.producerId, {
-      title: this.state.title,
-      file: this.state.file
-    });
-    console.log(API.getBeats());
+    let filename = "";
+    const { title, producerId } = this.state;
+
+    API.getFiles()
+      .then(res => {
+        const beatFiles = res.data;
+        const newFile = beatFiles.pop();
+        filename = newFile.filename;
+      })
+      .then(() => {
+        API.saveBeat(producerId, {
+          title: title,
+          file: filename
+        });
+      })
+      .catch(err => console.log(err));
+
     this.loadBeatsAndLicences();
     this.setState({ title: "", file: "" });
   };
@@ -116,15 +138,6 @@ class ProducerAdmin extends Component {
                   placeholder="Beat Title"
                 />
 
-                <label htmlFor="file">Select a file:</label>
-                <Input
-                  value={this.state.file}
-                  onChange={this.handleInputChange}
-                  name="file"
-                  type="file"
-                  id="file"
-                />
-
                 <Row>
                   <Col size="md-3">License</Col>
                   <Col size="md-3">Price</Col>
@@ -167,7 +180,7 @@ class ProducerAdmin extends Component {
                   <Col size="md-3">
                     <button
                       className="btn btn-primary"
-                      disabled={!this.state.file || !this.state.title}
+                      // disabled={!this.state.title}
                       onClick={this.handleFormSubmit}
                     >
                       Add Beat
