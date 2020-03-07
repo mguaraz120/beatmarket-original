@@ -147,7 +147,7 @@ app.post("/api/beats/upload", upload.single("file"), (req, res) => {
 app.get("/api/beats", beatsController.findAll);
 app.get("/api/beats/:id", beatsController.findById);
 app.post("/api/beats", beatsController.create);
-app.delete("/api/beats", beatsController.remove);
+app.delete("/api/beats/:id", beatsController.remove);
 // Matches with "/api/beats"
 // .get(beatsController.findAll)
 // .post(beatsController.create);

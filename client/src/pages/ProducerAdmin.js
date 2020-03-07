@@ -24,7 +24,6 @@ class ProducerAdmin extends Component {
     API.getProducer(this.props.match.params.id)
       .then(res => {
         const producer = res.data;
-        console.log(`producer: ${producer}`);
         const myBeats = [];
         producer.beats.forEach(beat => {
           myBeats.push({ producer: producer, beat: beat });
@@ -39,11 +38,8 @@ class ProducerAdmin extends Component {
   };
 
   handleRemoveBeat = beat => {
-    const { producerId } = this.state;
-    API.deleteBeatByProducer(producerId, beat)
-      .then(res => {
-        console.log(res.data.deleted);
-      })
+    API.deleteBeat(beat._id)
+
       .then(() => {
         this.loadBeatsAndLicences();
       })
@@ -83,11 +79,8 @@ class ProducerAdmin extends Component {
           title: title,
           filename: filename
         })
-          .then(res => console.log(res.data))
+          .then(() => this.loadBeatsAndLicences())
           .catch(err => console.log(err));
-      })
-      .then(() => {
-        this.loadBeatsAndLicences();
       })
       .catch(err => console.log(err));
 

@@ -13,6 +13,9 @@ export default {
   createBeat: function(producerId, beatData) {
     return axios.post("/api/beats", { producerId, beatData });
   },
+  createBeatOnProducer: function(beatData, producerId) {
+    return axios.post("/api/beats", beatData, producerId);
+  },
   deleteBeatByProducer: function(producerId, beatIn) {
     // remove beat from beats
     // remove beat from producer
@@ -32,7 +35,9 @@ export default {
   createProducer: function(producerData) {
     return axios.post("/api/producers", producerData);
   },
-
+  updateProducer: function(producerData) {
+    return axios.put("/api/producers/:id", producerData);
+  },
   getFiles: function() {
     return axios.get("/api/files");
   },

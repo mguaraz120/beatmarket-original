@@ -16,8 +16,9 @@ module.exports = {
   },
   create: function(req, res) {
     const { producerId, beatData } = req.body;
+
     console.log(
-      `beatsController create(producerId: ${producerId}, beatData: ${beatData})`
+      `beatsController create(producerId: ${producerId}, beatData: ${beatData.title})`
     );
     db.Beat.create(beatData)
       .then(dbModel => {
@@ -28,6 +29,7 @@ module.exports = {
         );
         // res.json(dbModel);
       })
+      .then(dbProducer => res.json(dbProducer))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {

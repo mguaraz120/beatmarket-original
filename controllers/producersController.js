@@ -9,6 +9,7 @@ module.exports = {
   findById: function(req, res) {
     db.Producer.findById(req.params.id)
       .populate("beats")
+      .populate("licenses")
       .then(dbModel => {
         console.log(dbModel);
         res.json(dbModel);
