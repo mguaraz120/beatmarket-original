@@ -6,7 +6,7 @@ import { Container } from "../components/Grid";
 import { Col, Row } from "../components/Grid";
 import { Input } from "../components/Form";
 import Jumbotron from "../components/Jumbotron";
-import API from "../utils/testAPI";
+import API from "../utils/API";
 class ProducerAdmin extends Component {
   state = {
     producerId: 0,
@@ -22,17 +22,22 @@ class ProducerAdmin extends Component {
 
   loadBeatsAndLicences = () => {
     const id = parseInt(this.props.match.params.id);
-    const producer = API.getProducers().find(producer => producer._id === id);
-    if (!producer) return;
-    const myBeats = [];
-    producer.beats.forEach(beat => {
-      myBeats.push({ producer: producer, beat: beat });
-    });
-    this.setState({
-      beats: myBeats,
-      licenses: producer.licenses,
-      producerId: id
-    });
+    API.getProducer(id)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+
+    // if (!producer) return;
+    // const myBeats = [];
+    // producer.beats.forEach(beat => {
+    //   myBeats.push({ producer: producer, beat: beat });
+    // });
+    // this.setState({
+    //   beats: myBeats,
+    //   licenses: producer.licenses,
+    //   producerId: id
+    // });
   };
 
   handleRemoveBeat = beat => {
