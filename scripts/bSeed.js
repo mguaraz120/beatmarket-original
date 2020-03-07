@@ -27,29 +27,35 @@ function attachBeatToProducer(beatTitle, producername) {
   );
 }
 
-attachUserToProducer("producer1@site.com", "producer1");
-attachUserToProducer("producer2@site.com", "producer2");
-attachUserToProducer("producer3@site.com", "producer3");
+try {
+  attachUserToProducer("producer1@site.com", "producer1");
+  attachUserToProducer("producer2@site.com", "producer2");
+  attachUserToProducer("producer3@site.com", "producer3");
 
-attachLicenseToProducer(29.99, "producer1");
-attachLicenseToProducer(59.99, "producer1");
-attachLicenseToProducer(499.99, "producer1");
+  attachLicenseToProducer(29.99, "producer1");
+  attachLicenseToProducer(59.99, "producer1");
+  attachLicenseToProducer(499.99, "producer1");
 
-attachLicenseToProducer(39.99, "producer2");
-attachLicenseToProducer(69.99, "producer2");
-attachLicenseToProducer(399.99, "producer2");
+  attachLicenseToProducer(39.99, "producer2");
+  attachLicenseToProducer(69.99, "producer2");
+  attachLicenseToProducer(399.99, "producer2");
 
-attachLicenseToProducer(27.99, "producer3");
-attachLicenseToProducer(57.99, "producer3");
-attachLicenseToProducer(477.99, "producer3");
+  attachLicenseToProducer(27.99, "producer3");
+  attachLicenseToProducer(57.99, "producer3");
+  attachLicenseToProducer(477.99, "producer3");
 
-attachBeatToProducer("abc", "producer1");
-attachBeatToProducer("def", "producer1");
-attachBeatToProducer("ghi", "producer1");
+  attachBeatToProducer("abc", "producer1");
+  attachBeatToProducer("def", "producer1");
+  attachBeatToProducer("ghi", "producer1");
 
-attachBeatToProducer("zyx", "producer2");
-attachBeatToProducer("wvu", "producer2");
+  attachBeatToProducer("zyx", "producer2");
+  attachBeatToProducer("wvu", "producer2");
 
-attachBeatToProducer("tsr", "producer3");
-attachBeatToProducer("qpo", "producer3");
-attachBeatToProducer("nml", "producer3");
+  attachBeatToProducer("tsr", "producer3");
+  attachBeatToProducer("qpo", "producer3");
+  attachBeatToProducer("nml", "producer3");
+} catch (error) {
+  print(errer);
+}
+
+print("bSeed complete.");

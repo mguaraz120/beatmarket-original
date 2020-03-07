@@ -48,16 +48,16 @@ print("-----------beats");
 try {
   db.beats.remove({});
   db.beats.insertMany([
-    { title: "abc", file: "", __v: 0 },
-    { title: "def", file: "", __v: 0 },
-    { title: "ghi", file: "", __v: 0 },
+    { title: "abc", filename: "", __v: 0 },
+    { title: "def", filename: "", __v: 0 },
+    { title: "ghi", filename: "", __v: 0 },
 
-    { title: "zyx", file: "", __v: 0 },
-    { title: "wvu", file: "", __v: 0 },
+    { title: "zyx", filename: "", __v: 0 },
+    { title: "wvu", filename: "", __v: 0 },
 
-    { title: "tsr", file: "", __v: 0 },
-    { title: "qpo", file: "", __v: 0 },
-    { title: "nml", file: "", __v: 0 }
+    { title: "tsr", filename: "", __v: 0 },
+    { title: "qpo", filename: "", __v: 0 },
+    { title: "nml", filename: "", __v: 0 }
   ]);
 
   const beatDocs = db.beats.find({});
