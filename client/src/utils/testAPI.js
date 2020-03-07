@@ -5,11 +5,12 @@ export default {
   getProducers: function() {
     return data.producers;
   },
-  deleteBeatByProducer: function(producerId, beatId) {
+  deleteBeatByProducer: function(producerId, beatId, filename) {
     data.beats = data.beats.filter(beat => beat._id !== beatId._id);
     let producer = data.producers.find(producer => producerId === producer._id);
     if (!producer) return;
     producer.beats = producer.beats.filter(beat => beat._id !== beatId);
+    return axios.delete("/api/files" + filename);
   },
   getCustomers: function() {
     return data.customers;
@@ -33,6 +34,14 @@ export default {
   },
   getFiles: function() {
     return axios.get("/api/files");
+  },
+  // /api/files/:filename
+  getFile: function(filename) {
+    return axios.get("/api/files" + filename);
+  },
+  // /api/files/:filename
+  deleteFile: function(filename) {
+    return axios.delete("/api/files" + filename);
   }
 };
 

@@ -73,11 +73,7 @@ const upload = multer({ storage });
 //   });
 // });
 
-app.post("/api/beats/upload", upload.single("file"), (req, res) => {
-  console.log(`app.post /upload ${req.file}`);
-  res.json({ file: req.file });
-});
-
+// get files
 app.get("/api/files", (req, res) => {
   gfs.files.find({}).toArray((err, files) => {
     if (!files || files.length === 0) {
@@ -89,6 +85,29 @@ app.get("/api/files", (req, res) => {
   });
 });
 
+//get file
+app.get("/api/files/:filename", (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "No file exists"
+      });
+    }
+    return res.json(file);
+  });
+});
+
+// delete file
+app.delete("/api/files/:filename", (req, res) => {
+  gfs.files.remove({ filename: req.params.filename }, function(err, gridStore) {
+    if (err) throw err;
+    return res.json({
+      deleted: req.params.filename
+    });
+  });
+});
+
+// play file
 app.get("/api/audio/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     if (!file || file.length === 0) {
@@ -108,45 +127,10 @@ app.get("/api/audio/:filename", (req, res) => {
   });
 });
 
-app.delete("/files/:filename", (req, res) => {
-  gfs.files.remove({ filename: req.params.filename }, function(err, gridStore) {
-    if (err) throw err;
-    return res.json({
-      deleted: req.params.filename
-    });
-  });
-});
-
-//get files/:filename
-app.get("/files/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exists"
-      });
-    }
-    return res.json(file);
-  });
-});
-
-//display single file object
-app.get("/audio/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exists"
-      });
-    }
-    if (file.contentType === "audio/mp3") {
-      //read output to browser
-      const readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: "Not a mp3 audio"
-      });
-    }
-  });
+// upload file
+app.post("/api/beats/upload", upload.single("file"), (req, res) => {
+  console.log(`app.post /upload ${req.file}`);
+  res.json({ file: req.file });
 });
 
 app.use(function(req, res) {

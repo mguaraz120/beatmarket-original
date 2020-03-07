@@ -35,8 +35,9 @@ class ProducerAdmin extends Component {
     });
   };
 
-  handleRemoveBeat = id => {
-    API.deleteBeatByProducer(2, id);
+  handleRemoveBeat = beat => {
+    const { producerId } = this.state;
+    API.deleteBeatByProducer(producerId, beat, beat.file);
     this.loadBeatsAndLicences();
   };
 
@@ -109,7 +110,7 @@ class ProducerAdmin extends Component {
                     <Card.Body>
                       <button
                         className="btn btn-primary"
-                        onClick={() => this.handleRemoveBeat(beat._id)}
+                        onClick={() => this.handleRemoveBeat(beat)}
                       >
                         Are you sure?
                       </button>

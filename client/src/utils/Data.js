@@ -67,7 +67,7 @@ const beats = [
   {
     _id: 1,
     title: "abc",
-    file: ""
+    file: "/api/audio/cc48fa3087f9a8278a38dd951b1b7105.mp3"
   },
   {
     _id: 2,
