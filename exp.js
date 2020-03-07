@@ -7,7 +7,6 @@ function create() {
     filename: "file1"
   });
 }
-
 create()
   .then(res => {
     console.log(res.data);
