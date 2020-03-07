@@ -56,23 +56,6 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-// app.get("/", (req, res) => {
-//   gfs.files.find({}).toArray((err, files) => {
-//     if (!files || files.length === 0) {
-//       res.render("index", { files: false });
-//     } else {
-//       files.map(file => {
-//         if (file.contentType === "audio/mp3") {
-//           file.isAudio = true;
-//         } else {
-//           file.isAudio = false;
-//         }
-//       });
-//       res.render("index", { files: files });
-//     }
-//   });
-// });
-
 // get files
 app.get("/api/files", (req, res) => {
   gfs.files.find({}).toArray((err, files) => {
@@ -99,6 +82,7 @@ app.get("/api/files/:filename", (req, res) => {
 
 // delete file
 app.delete("/api/files/:filename", (req, res) => {
+  console.log(`app.delete /api/files/${req.params.filename}`);
   gfs.files.remove({ filename: req.params.filename }, function(err, gridStore) {
     if (err) throw err;
     return res.json({
@@ -127,9 +111,29 @@ app.get("/api/audio/:filename", (req, res) => {
   });
 });
 
+// "file": {
+//   "fieldname": "file",
+//   "originalname": "[iSongs.info] 01 - Mind Block.mp3",
+//   "encoding": "7bit",
+//   "mimetype": "audio/mp3",
+//   "id": "5e630af59c19a85cc49e6324",
+//   "filename": "60ec4a14d0a3e16827e99fd3952b6f8e.mp3",
+//   "metadata": null,
+//   "bucketName": "uploads",
+//   "chunkSize": 261120,
+//   "size": 4275614,
+//   "md5": "42b06b3b772be11730e5a5db6e39aaae",
+//   "uploadDate": "2020-03-07T02:46:13.469Z",
+//   "contentType": "audio/mp3"
+//   }
+
 // upload file
 app.post("/api/beats/upload", upload.single("file"), (req, res) => {
-  console.log(`app.post /upload ${req.file}`);
+  const file = req.file;
+  const { originalname, filename } = file;
+  console.log(
+    `app.post /upload originalname: ${originalname}, filename: ${filename}`
+  );
   res.json({ file: req.file });
 });
 

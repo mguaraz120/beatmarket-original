@@ -5,12 +5,12 @@ export default {
   getProducers: function() {
     return data.producers;
   },
-  deleteBeatByProducer: function(producerId, beatId, filename) {
-    data.beats = data.beats.filter(beat => beat._id !== beatId._id);
+  deleteBeatByProducer: function(producerId, beatIn) {
+    data.beats = data.beats.filter(beat => beat._id !== beatIn._id);
     let producer = data.producers.find(producer => producerId === producer._id);
     if (!producer) return;
-    producer.beats = producer.beats.filter(beat => beat._id !== beatId);
-    return axios.delete("/api/files" + filename);
+    producer.beats = producer.beats.filter(beat => beat._id !== beatIn._id);
+    return axios.delete("/api/files/" + beatIn.file);
   },
   getCustomers: function() {
     return data.customers;

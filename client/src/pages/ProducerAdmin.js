@@ -37,8 +37,14 @@ class ProducerAdmin extends Component {
 
   handleRemoveBeat = beat => {
     const { producerId } = this.state;
-    API.deleteBeatByProducer(producerId, beat, beat.file);
-    this.loadBeatsAndLicences();
+    API.deleteBeatByProducer(producerId, beat)
+      .then(res => {
+        console.log(res.data.deleted);
+      })
+      .then(() => {
+        this.loadBeatsAndLicences();
+      })
+      .catch(err => console.log(err));
   };
 
   handleInputChange = event => {
@@ -75,9 +81,11 @@ class ProducerAdmin extends Component {
           file: filename
         });
       })
+      .then(() => {
+        this.loadBeatsAndLicences();
+      })
       .catch(err => console.log(err));
 
-    this.loadBeatsAndLicences();
     this.setState({ title: "", file: "" });
   };
 
@@ -94,7 +102,7 @@ class ProducerAdmin extends Component {
             </Col>
             <Col size="md-5">
               <audio controls>
-                <source src={beat.file} type="audio/mpeg" />
+                <source src={"/api/audio/" + beat.file} type="audio/mpeg" />
               </audio>
             </Col>
 
@@ -177,6 +185,7 @@ class ProducerAdmin extends Component {
                     />
                   </form>
                 </Row>
+                <br />
                 <Row>
                   <Col size="md-3">
                     <button
