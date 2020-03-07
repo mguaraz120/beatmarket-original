@@ -10,6 +10,8 @@ const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
 const methodOverride = require("method-override");
 
+const beatsController = require("./controllers/beatsController");
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -56,6 +58,8 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
+// -------------------------------------------------------Routing
+// +++++++++++++File Routing
 // get files
 app.get("/api/files", (req, res) => {
   gfs.files.find({}).toArray((err, files) => {
@@ -136,7 +140,29 @@ app.post("/api/beats/upload", upload.single("file"), (req, res) => {
   );
   res.json({ file: req.file });
 });
+// ############# end File Routing
 
+// +++++++++++++ Beat Routing
+app.get("/api/beats", beatsController.findAll);
+
+// Matches with "/api/beats"
+// .get(beatsController.findAll)
+// .post(beatsController.create);
+// ############# end Beat Routing
+
+// +++++++++++++ License Routing
+
+// ############# end License Routing
+
+// +++++++++++++ Producer Routing
+
+// ############# end Producer Routing
+
+// +++++++++++++ mock User Routing
+
+// ############# end mock User Routing
+
+// ------------------------------------------------------- end Routing
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
