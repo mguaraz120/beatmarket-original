@@ -81,7 +81,7 @@ class ProducerAdmin extends Component {
         filename = newFile.filename;
       })
       .then(() => {
-        API.saveBeat(producerId, {
+        API.createBeat(producerId, {
           title: title,
           file: filename
         });

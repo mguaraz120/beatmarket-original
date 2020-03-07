@@ -9,10 +9,13 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    console.log("producersController findById");
+    console.log(`producersController findById ${req.params.id}`);
     console.log(req.query);
     db.Producer.findById(req.params.id)
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        console.log(dbModel);
+        res.json(dbModel);
+      })
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
