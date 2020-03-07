@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import Jumbotron from "../components/Jumbotron";
 import { Container, Col, Row } from "../components/Grid";
-import API from "../utils/testAPI";
+import API from "../utils/API";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
@@ -21,8 +21,18 @@ class Home extends Component {
   }
 
   loadBeats = () => {
+    API.getProducers()
+      .then(res => {
+        const producers = res.data;
+        console.log(`res.data: ${res.data}`);
+        this.setState({ beats: this.getFirstBeats(producers) });
+      })
+      .catch(err => console.log(err));
+  };
+
+  getFirstBeats(producers) {
     const beatsByDifferentProducers = [];
-    API.getProducers().forEach(producer => {
+    producers.forEach(producer => {
       let myBeats = producer.beats;
       let displayBeat = myBeats[0];
       if (displayBeat)
@@ -31,8 +41,8 @@ class Home extends Component {
           beat: displayBeat
         });
     });
-    this.setState({ beats: beatsByDifferentProducers });
-  };
+    return beatsByDifferentProducers;
+  }
 
   handleLicenseSelected = license => {
     this.setState({ selectedLicense: license });

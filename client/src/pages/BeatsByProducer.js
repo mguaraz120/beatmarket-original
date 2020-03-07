@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Container, Col, Row } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
-import API from "../utils/testAPI";
+import API from "../utils/API";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
@@ -21,10 +21,13 @@ class BeatsByProducer extends Component {
   }
 
   loadBeatsAndLicences = () => {
-    const id = parseInt(this.props.match.params.id);
-    const producer = API.getProducers().find(producer => producer._id === id);
-    const beats = producer.beats;
-    this.setState({ producer, beats });
+    API.getProducer(this.props.match.params.id)
+      .then(res => {
+        const producer = res.data;
+        const beats = producer.beats;
+        this.setState({ producer, beats });
+      })
+      .catch(err => console.log(err));
   };
 
   handleLicenseSelected = license => {

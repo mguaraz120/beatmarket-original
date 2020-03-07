@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "../components/Grid";
 import { Input } from "../components/Form";
 import Jumbotron from "../components/Jumbotron";
-import API from "../utils/testAPI";
+import API from "../utils/API";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCart, removeFromCart } from "../redux/actions";
@@ -46,7 +46,7 @@ class Checkout extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    API.saveCustomer({
+    API.createCustomer({
       email: this.state.email,
       firstName: this.state.firstName,
       lastName: this.state.lastName

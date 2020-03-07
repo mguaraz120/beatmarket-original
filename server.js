@@ -12,6 +12,9 @@ const methodOverride = require("method-override");
 
 const beatsController = require("./controllers/beatsController");
 const producersController = require("./controllers/producersController");
+const customersController = require("./controllers/customersController");
+const licensesController = require("./controllers/licensesController");
+const usersController = require("./controllers/usersController");
 
 const PORT = process.env.PORT || 3001;
 
@@ -59,8 +62,7 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-// -------------------------------------------------------Routing
-// +++++++++++++File Routing
+// File routing
 // get files
 app.get("/api/files", (req, res) => {
   gfs.files.find({}).toArray((err, files) => {
@@ -141,30 +143,28 @@ app.post("/api/beats/upload", upload.single("file"), (req, res) => {
   );
   res.json({ file: req.file });
 });
-// ############# end File Routing
 
-// +++++++++++++ Beat Routing
+// -------------------------------------------------------
+// Beat Routing
 app.get("/api/beats", beatsController.findAll);
 app.get("/api/beats/:id", beatsController.findById);
 app.post("/api/beats", beatsController.create);
 app.delete("/api/beats/:id", beatsController.remove);
-// Matches with "/api/beats"
-// .get(beatsController.findAll)
-// .post(beatsController.create);
-// ############# end Beat Routing
 
-// +++++++++++++ License Routing
-// app.get("/api/licenses", licensesController.findAll);
+// Customer routing
+app.get("/api/customers/:id", customersController.findById);
+app.post("/api/customers", customersController.create);
 
-// ############# end License Routing
+// License Routing
+app.get("/api/licenses", licensesController.findAll);
 
-// +++++++++++++ Producer Routing
+// Producer Routing
+app.get("/api/producers/", producersController.findAll);
 app.get("/api/producers/:id", producersController.findById);
-// ############# end Producer Routing
 
-// +++++++++++++ mock User Routing
-
-// ############# end mock User Routing
+// mock User Routing
+app.get("/api/users/:id", usersController.findById);
+app.post("/api/users", usersController.create);
 
 // ------------------------------------------------------- end Routing
 app.use(function(req, res) {
