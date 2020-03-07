@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Connect to the Mongo DB
 const dbUri = "mongodb://localhost/beatmarketdb";
-// mongoose.connect(process.env.MONGODB_URI || dbUri);
+mongoose.connect(process.env.MONGODB_URI || dbUri);
 let gfs;
 var conn = mongoose.createConnection(process.env.MONGODB_URI || dbUri);
 conn.once("open", function() {
