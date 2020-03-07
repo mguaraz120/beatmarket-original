@@ -17,3 +17,4 @@ router
   .delete(beatsController.remove);
 
 module.exports = router;
+console.log("");
