@@ -1,9 +1,10 @@
 const db = require("../models");
 
-// Defining methods for the booksController
+// Defining methods for the beatsController
 module.exports = {
   findAll: function(req, res) {
-    console.log("booksController findAll");
+    console.log("beatsController findAll");
+    console.log(req.query);
     db.Beat.find(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
