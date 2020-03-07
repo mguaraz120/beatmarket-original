@@ -15,8 +15,19 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Beat.create(req.body)
-      .then(dbModel => res.json(dbModel))
+    const { producerId, beatData } = req.body;
+    console.log(
+      `beatsController create(producerId: ${producerId}, beatData: ${beatData})`
+    );
+    db.Beat.create(beatData)
+      .then(dbModel => {
+        return db.Producer.findOneAndUpdate(
+          { _id: producerId },
+          { $push: { beats: dbModel._id } },
+          { new: true }
+        );
+        // res.json(dbModel);
+      })
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {

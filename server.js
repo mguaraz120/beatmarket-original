@@ -145,18 +145,20 @@ app.post("/api/beats/upload", upload.single("file"), (req, res) => {
 
 // +++++++++++++ Beat Routing
 app.get("/api/beats", beatsController.findAll);
-
+app.get("/api/beats/:id", beatsController.findById);
+app.post("/api/beats", beatsController.create);
+app.delete("/api/beats", beatsController.remove);
 // Matches with "/api/beats"
 // .get(beatsController.findAll)
 // .post(beatsController.create);
 // ############# end Beat Routing
 
 // +++++++++++++ License Routing
+// app.get("/api/licenses", licensesController.findAll);
 
 // ############# end License Routing
 
 // +++++++++++++ Producer Routing
-app.get("/api/producers", producersController.findAll);
 app.get("/api/producers/:id", producersController.findById);
 // ############# end Producer Routing
 

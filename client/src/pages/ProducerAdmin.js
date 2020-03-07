@@ -13,7 +13,7 @@ class ProducerAdmin extends Component {
     beats: [],
     licenses: [],
     title: "",
-    file: ""
+    filename: ""
   };
 
   componentDidMount() {
@@ -21,23 +21,21 @@ class ProducerAdmin extends Component {
   }
 
   loadBeatsAndLicences = () => {
-    const id = parseInt(this.props.match.params.id);
-    API.getProducer(id)
+    API.getProducer(this.props.match.params.id)
       .then(res => {
-        console.log(res.data);
+        const producer = res.data;
+        console.log(`producer: ${producer}`);
+        const myBeats = [];
+        producer.beats.forEach(beat => {
+          myBeats.push({ producer: producer, beat: beat });
+        });
+        this.setState({
+          beats: myBeats,
+          licenses: producer.licenses,
+          producerId: producer._id
+        });
       })
       .catch(err => console.log(err));
-
-    // if (!producer) return;
-    // const myBeats = [];
-    // producer.beats.forEach(beat => {
-    //   myBeats.push({ producer: producer, beat: beat });
-    // });
-    // this.setState({
-    //   beats: myBeats,
-    //   licenses: producer.licenses,
-    //   producerId: id
-    // });
   };
 
   handleRemoveBeat = beat => {
@@ -83,8 +81,10 @@ class ProducerAdmin extends Component {
       .then(() => {
         API.createBeat(producerId, {
           title: title,
-          file: filename
-        });
+          filename: filename
+        })
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err));
       })
       .then(() => {
         this.loadBeatsAndLicences();
@@ -107,7 +107,7 @@ class ProducerAdmin extends Component {
             </Col>
             <Col size="md-5">
               <audio controls>
-                <source src={"/api/audio/" + beat.file} type="audio/mpeg" />
+                <source src={"/api/audio/" + beat.filename} type="audio/mpeg" />
               </audio>
             </Col>
 

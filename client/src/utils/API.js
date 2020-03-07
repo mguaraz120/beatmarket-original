@@ -11,7 +11,7 @@ export default {
     return axios.delete("/api/beats/" + id);
   },
   createBeat: function(producerId, beatData) {
-    return axios.post("/api/beats", beatData);
+    return axios.post("/api/beats", { producerId, beatData });
   },
   deleteBeatByProducer: function(producerId, beatIn) {
     // remove beat from beats

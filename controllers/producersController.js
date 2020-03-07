@@ -2,16 +2,13 @@ const db = require("../models");
 
 module.exports = {
   findAll: function(req, res) {
-    console.log("producersController findAll");
-    console.log(req.query);
     db.Producer.find(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    console.log(`producersController findById ${req.params.id}`);
-    console.log(req.query);
     db.Producer.findById(req.params.id)
+      .populate("beats")
       .then(dbModel => {
         console.log(dbModel);
         res.json(dbModel);
