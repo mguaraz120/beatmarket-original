@@ -4,15 +4,15 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   email: {
-    type: String,
-    required: "Email address is required",
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please enter a valid email address"
-    ]
-  },
-  created: { type: Date, required: true, default: Date.now() }
+    type: String
+    // required: "Email address is required",
+    // unique: true,
+    // match: [
+    //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    //   "Please enter a valid email address"
+    // ]
+  }
+  // created: { type: Date, required: true, default: Date.now() }
 });
 
 // User.plugin(passportLocalMongoose);
