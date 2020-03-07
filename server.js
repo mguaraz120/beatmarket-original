@@ -11,6 +11,7 @@ const Grid = require("gridfs-stream");
 const methodOverride = require("method-override");
 
 const beatsController = require("./controllers/beatsController");
+const producersController = require("./controllers/producersController");
 
 const PORT = process.env.PORT || 3001;
 
@@ -155,7 +156,8 @@ app.get("/api/beats", beatsController.findAll);
 // ############# end License Routing
 
 // +++++++++++++ Producer Routing
-
+app.get("/api/producers", producersController.findAll);
+app.get("/api/producers/:id", producersController.findById);
 // ############# end Producer Routing
 
 // +++++++++++++ mock User Routing
