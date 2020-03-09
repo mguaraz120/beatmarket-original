@@ -1,21 +1,19 @@
 const mongoose = require("mongoose");
-const db = require("../models");
+const models = require("../models");
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/beatmarketdb");
 
 const beatSeed = [
-  {
-    title: "The Dead Zone",
-    filename: "file1"
-  },
-  {
-    title: "McCalic",
-    filename: "file2"
-  },
-  {
-    title: "The Catcher",
-    filename: "file3"
-  }
+  { title: "abc", filename: "" },
+  { title: "def", filename: "" },
+  { title: "ghi", filename: "" },
+
+  { title: "zyx", filename: "" },
+  { title: "wvu", filename: "" },
+
+  { title: "tsr", filename: "" },
+  { title: "qpo", filename: "" },
+  { title: "nml", filename: "" }
 ];
 
 const licenseSeed = [
@@ -31,34 +29,30 @@ const licenseSeed = [
 ];
 
 const producerSeed = [
-  {
-    name: "rumothy"
-    // user: "",
-    // beats: [],
-    // licences: []
-  },
-  {
-    name: "michie"
-    // user: "",
-    // beats: [],
-    // licences: []
-  },
-  {
-    name: "diablita"
-    // user: "",
-    // beats: [],
-    // licences: []
-  }
+  { name: "producer1" },
+  { name: "producer2" },
+  { name: "producer3" }
 ];
 
 const userSeed = [
-  { email: "rumothy@place.com" },
-  { email: "michie@home.com" },
-  { email: "diablita@heat.com" }
+  // { email: "producer1@site.com", created: ISODate() },
+  // { email: "producer2@site.com", created: ISODate() },
+  // { email: "producer3@site.com", created: ISODate() }
+  { email: "producer1@site.com" },
+  { email: "producer2@site.com" },
+  { email: "producer3@site.com" }
 ];
 
-db.Beat.remove({})
-  .then(() => db.Beat.collection.insertMany(beatSeed))
+models.Beat.collection.remove({});
+models.License.collection.remove({});
+models.Producer.collection.remove({});
+models.Customer.collection.remove({});
+models.User.collection.remove({});
+
+console.log("collections gone!");
+
+models.Beat.remove({})
+  .then(() => models.Beat.collection.insertMany(beatSeed))
   .then(data => {
     console.log(data.result.n + " Beat records inserted!");
     process.exit(0);
@@ -68,8 +62,8 @@ db.Beat.remove({})
     process.exit(1);
   });
 
-db.License.remove({})
-  .then(() => db.License.collection.insertMany(licenseSeed))
+models.License.remove({})
+  .then(() => models.License.collection.insertMany(licenseSeed))
   .then(data => {
     console.log(data.result.n + " License records inserted!");
     process.exit(0);
@@ -79,8 +73,8 @@ db.License.remove({})
     process.exit(1);
   });
 
-db.Producer.remove({})
-  .then(() => db.Producer.collection.insertMany(producerSeed))
+models.Producer.remove({})
+  .then(() => models.Producer.collection.insertMany(producerSeed))
   .then(data => {
     console.log(data.result.n + " Producer records inserted!");
     process.exit(0);
@@ -90,8 +84,8 @@ db.Producer.remove({})
     process.exit(1);
   });
 
-db.User.remove({})
-  .then(() => db.User.collection.insertMany(userSeed))
+models.User.remove({})
+  .then(() => models.User.collection.insertMany(userSeed))
   .then(data => {
     console.log(data.result.n + " User records inserted!");
     process.exit(0);
@@ -100,3 +94,24 @@ db.User.remove({})
     console.error(err);
     process.exit(1);
   });
+
+// attach
+// models.Beat.find({})
+//   .then(beats => {
+//     console.log(`beats: ${beats}`);
+//     // return db.Library.findOneAndUpdate({}, { $push: { books: dbBook._id } }, { new: true });
+//     const beat = beats[0];
+//     return models.Producer.findOneAndUpdate(
+//       { name: "producer1" },
+//       { $push: { beats: beat._id } },
+//       { new: true }
+//     );
+//   })
+//   .then(producer => {
+//     console.log(producer);
+//     process.exit(0);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//     process.exit(1);
+//   });
