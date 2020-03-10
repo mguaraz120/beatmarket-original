@@ -1,5 +1,5 @@
 //$ mongo mongoSeed
-const db = connect("127.0.0.1:27017/beatmarketdb");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/beatmarketdb");
 
 print("-----------users");
 try {
