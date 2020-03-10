@@ -11,19 +11,23 @@ import API from "../utils/API";
 // Use Link component link Home Component beatsbyproducer
 class ProducerLogin extends Component {
   state = {
-    producerId: []
+    producerId: -1
   };
 
   componentDidMount() {
-    this.loadBeats();
+    this.loadFirstProducersId();
   }
 
   loadFirstProducersId = () => {
     API.getProducers()
       .then(res => {
-        console.log(`res: ${res}`);
-        console.log(`res.data: ${res.data}`);
-        this.setState({ producerId: this.firstProducersId });
+        const producers = res.data;
+        if (!producers || producers.length < 1) {
+          console.log("no producers.");
+          return;
+        }
+
+        this.setState({ producerId: producers[0]._id });
       })
       .catch(err => console.log(err));
   };
