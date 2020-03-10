@@ -136,22 +136,9 @@ app.get("/api/audio/:filename", (req, res) => {
 
 // upload file
 
-try {
-  app.post("/api/beats/upload", upload.single("file"), (req, res) => {
-    try {
-      const file = req.file;
-      const { originalname, filename } = file;
-      console.log(
-        `app.post /upload originalname: ${originalname}, filename: ${filename}`
-      );
-      res.json({ file: req.file });
-    } catch (insideError) {
-      console.log("inside error", insideError);
-    }
-  });
-} catch (error) {
-  console.log("outside error", error);
-}
+app.post("/api/beats/upload", upload.single("file"), (req, res) => {
+  res.send(`${req.file.originalname} uploaded.`);
+});
 
 // -------------------------------------------------------
 // Beat Routing
