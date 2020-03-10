@@ -1,10 +1,7 @@
 const db = require("../models");
 
-// Defining methods for the beatsController
 module.exports = {
   findAll: function(req, res) {
-    console.log("beatsController findAll");
-    console.log(req.query);
     db.Beat.find(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -16,10 +13,6 @@ module.exports = {
   },
   create: function(req, res) {
     const { producerId, beatData } = req.body;
-
-    console.log(
-      `beatsController create(producerId: ${producerId}, beatData: ${beatData.title})`
-    );
     db.Beat.create(beatData)
       .then(dbModel => {
         return db.Producer.findOneAndUpdate(
@@ -27,7 +20,6 @@ module.exports = {
           { $push: { beats: dbModel._id } },
           { new: true }
         );
-        // res.json(dbModel);
       })
       .then(dbProducer => res.json(dbProducer))
       .catch(err => res.status(422).json(err));
@@ -44,7 +36,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   createAudioFile: function(req, res) {
-    console.log(`beatsController createAudioFile ${req.body.name}`);
     res.send("success");
   }
 };
