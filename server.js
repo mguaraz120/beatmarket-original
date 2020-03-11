@@ -35,10 +35,12 @@ if (process.env.NODE_ENV === "production") {
 // Connect to the Mongo DB
 const dbUri = "mongodb://localhost/beatmarketdb";
 mongoose.connect(process.env.MONGODB_URI || dbUri);
-let gfs;
 const conn = mongoose.createConnection(process.env.MONGODB_URI || dbUri, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
+
+let gfs;
 conn.once("open", function() {
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection("uploads");
@@ -108,7 +110,7 @@ app.get("/api/audio/:filename", (req, res) => {
         err: "No file exists"
       });
     }
-    if (file.contentType === "audio/mp3") {
+    if (file.contentType === "audio/mp3" || file.contentType === "audio/mpeg") {
       //read output to browser
       const readstream = gfs.createReadStream(file.filename);
       readstream.pipe(res);
@@ -139,7 +141,9 @@ app.get("/api/audio/:filename", (req, res) => {
 // upload file
 
 app.post("/api/beats/upload", upload.single("file"), (req, res) => {
-  res.send(`${req.file.originalname} uploaded.`);
+  res.send(
+    `${req.file.originalname} uploaded. contentType: ${req.file.contentType}`
+  );
 });
 
 // -------------------------------------------------------
