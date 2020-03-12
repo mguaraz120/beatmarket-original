@@ -54,6 +54,12 @@ class Checkout extends Component {
     console.log(API.getCustomers());
   };
 
+  handleCompletePurchase = event => {
+    event.preventDefault();
+    alert("Thanks for you purchase!");
+    this.setState({ email: "", firstName: "", lastName: "" });
+  };
+
   render() {
     return (
       <Container fluid>
@@ -114,7 +120,7 @@ class Checkout extends Component {
             disabled={
               !(this.state.email && this.state.firstName && this.state.lastName)
             }
-            onClick={() => alert("Thanks for you purchase!")}
+            onClick={event => this.handleCompletePurchase(event)}
           >
             Complete Purchase
           </button>
