@@ -43,7 +43,9 @@ class ProducerLogin extends Component {
           <Input />
 
           <Link to={"/producerAdmin/" + this.state.producerId}>
-            Producer Login
+            <button className="btn btn-primary btn-block">
+              Producer Login
+            </button>
           </Link>
         </Container>
       </form>

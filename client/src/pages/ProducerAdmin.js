@@ -156,15 +156,30 @@ class ProducerAdmin extends Component {
                     encType="multipart/form-data"
                     name={this.state.producerId}
                   >
-                    <input type="file" name="file" id="file" />
                     <input
+                      type="file"
+                      name="file"
+                      id="file"
+                      style={{ margin: "10px 10px 0px 0px" }}
+                    />
+                    <input
+                      style={{ margin: "10px 10px 0px 0px" }}
                       type="submit"
                       value="Upload"
                       className="btn btn-primary btn-block"
                       onClick={event => this.onUpload(event)}
                     />
                   </form>
-                  <label htmlFor="title">New Beat Title</label>
+                </Row>
+                <Row>
+                  <label
+                    style={{ margin: "10px 10px 0px 0px" }}
+                    htmlFor="title"
+                  >
+                    New Beat Title
+                  </label>
+                </Row>
+                <Row>
                   <Input
                     value={this.state.title}
                     onChange={this.handleInputChange}
@@ -172,18 +187,16 @@ class ProducerAdmin extends Component {
                     placeholder="Beat Title"
                   />
                 </Row>
-                <br />
+                {/* <br />
+                <br /> */}
                 <Row>
-                  <Col size="md-3">
-                    <button
-                      className="btn btn-primary"
-                      // disabled={!this.state.title}
-                      onClick={this.handleFormSubmit}
-                    >
-                      Add Beat
-                    </button>
-                  </Col>
-                  <Col size="md-3"></Col>
+                  <button
+                    className="btn btn-primary"
+                    // disabled={!this.state.title}
+                    onClick={this.handleFormSubmit}
+                  >
+                    Add Beat
+                  </button>
                 </Row>
               </Card.Body>
             </Accordion.Collapse>
