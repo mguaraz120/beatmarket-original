@@ -61,8 +61,13 @@ class ProducerAdmin extends Component {
     API.getFiles()
       .then(res => {
         const beatFiles = res.data;
-        const newFile = beatFiles.pop();
-        filename = newFile.Key;
+        const sortedFiles = beatFiles.sort(
+          (beatFileA, beatFileB) =>
+            Date.parse(beatFileA.LastModified) -
+            Date.parse(beatFileB.LastModified)
+        );
+        const lastFile = sortedFiles.pop();
+        filename = lastFile.Key;
       })
       .then(() => {
         API.createBeat(producerId, {
@@ -77,6 +82,9 @@ class ProducerAdmin extends Component {
     this.setState({ title: "", file: "" });
   };
 
+  onUpload = event => {
+    // console.log(event);
+  };
   render() {
     return (
       <Container fluid>
@@ -146,12 +154,14 @@ class ProducerAdmin extends Component {
                     action="/api/files"
                     method="POST"
                     encType="multipart/form-data"
+                    name={this.state.producerId}
                   >
                     <input type="file" name="file" id="file" />
                     <input
                       type="submit"
                       value="Upload"
                       className="btn btn-primary btn-block"
+                      onClick={event => this.onUpload(event)}
                     />
                   </form>
                   <label htmlFor="title">New Beat Title</label>
