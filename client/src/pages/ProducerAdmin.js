@@ -87,6 +87,9 @@ class ProducerAdmin extends Component {
     this.setState({ title: "", file: "" });
   };
 
+  test = () => {
+    console.log("test");
+  };
   render() {
     return (
       <Container fluid>
@@ -100,7 +103,7 @@ class ProducerAdmin extends Component {
             </Col>
             <Col size="md-5">
               <audio controls>
-                <source src={"/play_file/" + beat.filename} type="audio/mpeg" />
+                <source src={"/api/audio/" + beat.filename} type="audio/mpeg" />
               </audio>
             </Col>
 
@@ -152,6 +155,19 @@ class ProducerAdmin extends Component {
                   </Row>
                 ))}
                 <Row>
+                  <form
+                    action="/api/files"
+                    method="POST"
+                    encType="multipart/form-data"
+                    onSubmit={this.test}
+                  >
+                    <input type="file" name="file" id="file" />
+                    <input
+                      type="submit"
+                      value="Upload"
+                      className="btn btn-primary btn-block"
+                    />
+                  </form>
                   <label htmlFor="title">New Beat Title</label>
                   <Input
                     value={this.state.title}
@@ -159,30 +175,6 @@ class ProducerAdmin extends Component {
                     name="title"
                     placeholder="Beat Title"
                   />
-                </Row>
-                <Row>
-                  <form
-                    action="/post_file"
-                    method="POST"
-                    encType="multipart/form-data"
-                  >
-                    <div className="custom-file mb-3">
-                      <input
-                        type="file"
-                        name="file"
-                        id="file"
-                        className="custom-file-input"
-                      />
-                      <label htmlFor="file" className="custom-file-label">
-                        Choose File
-                      </label>
-                    </div>
-                    <input
-                      type="submit"
-                      value="Submit"
-                      className="btn btn-primary btn-block"
-                    />
-                  </form>
                 </Row>
                 <br />
                 <Row>

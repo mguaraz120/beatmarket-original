@@ -51,16 +51,30 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-app.post("/post_file", upload.single("file"), function(req, res) {
+app.post("/api/files", upload.single("file"), function(req, res) {
   uploadFile(req.file.path, req.file.filename, res);
 });
 
-app.get("/get_file/:file_name", (req, res) => {
-  retrieveFile(req.params.file_name, res);
+app.get("/api/files/:filename", (req, res) => {
+  retrieveFile(req.params.filename, res);
+});
+
+app.get("/api/files/", (req, res) => {
+  const getParams = {
+    Bucket: keys.bucket_name,
+    MaxKeys: 20
+  };
+
+  s3.listObjectsV2(getParams, (err, data) => {
+    if (err) {
+      return res.status(400).send({ success: false, err: err });
+    }
+    res.json(data.Contents);
+  });
 });
 
 // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/requests-using-stream-objects.html
-app.get("/play_file/:filename", (req, res) => {
+app.get("/api/audio/:filename", (req, res) => {
   const getParams = {
     Bucket: keys.bucket_name,
     Key: req.params.filename
@@ -80,13 +94,13 @@ app.get("/play_file/:filename", (req, res) => {
     });
 });
 
-function uploadFile(source, targetName, res) {
+function uploadFile(source, filename, res) {
   console.log("preparing to upload...");
   fs.readFile(source, function(err, filedata) {
     if (!err) {
       const putParams = {
         Bucket: keys.bucket_name,
-        Key: targetName,
+        Key: filename,
         Body: filedata
       };
       s3.putObject(putParams, function(err, data) {
@@ -96,7 +110,7 @@ function uploadFile(source, targetName, res) {
         } else {
           fs.unlink(source, () => {});
           console.log("Successfully uploaded the file");
-          return res.send({ success: true });
+          return res.send({ success: true, filename: filename });
         }
       });
     } else {
