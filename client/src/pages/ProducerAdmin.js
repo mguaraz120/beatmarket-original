@@ -53,16 +53,6 @@ class ProducerAdmin extends Component {
     });
   };
 
-  /* class BeatFile {
-  // _id: Number
-  // length: Number,
-  // chunkSize: Number,
-  // uploadDate: Date,
-  // filename: String,
-  // md5: String,
-  // contentType: String
-} */
-
   handleFormSubmit = event => {
     event.preventDefault();
     let filename = "";
@@ -72,7 +62,7 @@ class ProducerAdmin extends Component {
       .then(res => {
         const beatFiles = res.data;
         const newFile = beatFiles.pop();
-        filename = newFile.filename;
+        filename = newFile.Key;
       })
       .then(() => {
         API.createBeat(producerId, {
@@ -87,9 +77,6 @@ class ProducerAdmin extends Component {
     this.setState({ title: "", file: "" });
   };
 
-  test = () => {
-    console.log("test");
-  };
   render() {
     return (
       <Container fluid>
@@ -159,7 +146,6 @@ class ProducerAdmin extends Component {
                     action="/api/files"
                     method="POST"
                     encType="multipart/form-data"
-                    onSubmit={this.test}
                   >
                     <input type="file" name="file" id="file" />
                     <input

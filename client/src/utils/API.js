@@ -39,9 +39,7 @@ export default {
     return axios.put("/api/producers/:id", producerData);
   },
   getFiles: function() {
-    return new Promise(function(resolve, reject) {
-      console.log("getFiles not implemented");
-    });
+    return axios.get("/api/files");
   },
   getFile: function(filename) {
     return axios.get("/get_file/" + filename);
