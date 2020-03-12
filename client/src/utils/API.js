@@ -39,13 +39,17 @@ export default {
     return axios.put("/api/producers/:id", producerData);
   },
   getFiles: function() {
-    return axios.get("/api/files");
+    return new Promise(function(resolve, reject) {
+      console.log("getFiles not implemented");
+    });
   },
   getFile: function(filename) {
-    return axios.get("/api/files" + filename);
+    return axios.get("/get_file/" + filename);
   },
   deleteFile: function(filename) {
-    return axios.delete("/api/files" + filename);
+    return new Promise(function(resolve, reject) {
+      console.log("deleteFile not implemented");
+    });
   },
 
   getCustomers: function() {

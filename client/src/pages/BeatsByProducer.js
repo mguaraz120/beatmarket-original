@@ -54,7 +54,7 @@ class BeatsByProducer extends Component {
             </Col>
             <Col size="md-5">
               <audio controls>
-                <source src={"/api/audio/" + beat.filename} type="audio/mpeg" />
+                <source src={"/play_file/" + beat.filename} type="audio/mpeg" />
               </audio>
             </Col>
             <Col size="md-3">

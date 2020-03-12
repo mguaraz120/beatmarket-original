@@ -100,7 +100,7 @@ class ProducerAdmin extends Component {
             </Col>
             <Col size="md-5">
               <audio controls>
-                <source src={"/api/audio/" + beat.filename} type="audio/mpeg" />
+                <source src={"/play_file/" + beat.filename} type="audio/mpeg" />
               </audio>
             </Col>
 
@@ -137,14 +137,6 @@ class ProducerAdmin extends Component {
             </Card.Header>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <label htmlFor="title">New Beat Title</label>
-                <Input
-                  value={this.state.title}
-                  onChange={this.handleInputChange}
-                  name="title"
-                  placeholder="Beat Title"
-                />
-
                 <Row>
                   <Col size="md-3">License</Col>
                   <Col size="md-3">Price</Col>
@@ -160,8 +152,17 @@ class ProducerAdmin extends Component {
                   </Row>
                 ))}
                 <Row>
+                  <label htmlFor="title">New Beat Title</label>
+                  <Input
+                    value={this.state.title}
+                    onChange={this.handleInputChange}
+                    name="title"
+                    placeholder="Beat Title"
+                  />
+                </Row>
+                <Row>
                   <form
-                    action="/api/beats/upload"
+                    action="/post_file"
                     method="POST"
                     encType="multipart/form-data"
                   >
