@@ -114,7 +114,7 @@ class Checkout extends Component {
             disabled={
               !(this.state.email && this.state.firstName && this.state.lastName)
             }
-            onClick={this.handleFormSubmit}
+            onClick={() => alert("Thanks for you purchase!")}
           >
             Complete Purchase
           </button>
